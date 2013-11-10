@@ -1,0 +1,36 @@
+#!/usr/bin/env node
+
+# Convert forecast in input file 'forecast.json' to
+# output file 'assemble.json'. The output is essentially a
+# sequence of raw pictures to be assembled.
+
+OUTPUT_FILE = "assemble.json"
+
+fs = require('fs')
+path = require('path')
+
+json = fs.readFileSync('forecast.json')
+forecast = JSON.parse(json)
+rows = []
+row = []
+forecast.list.map(function(x) {
+  var weatherId = String(x.weather[0].id)
+  var filename
+  while (true) {
+    filename = path.join("rawimage", weatherId + '.raw')
+    if(fs.existsSync(filename)) {
+      break
+    }
+    weatherId = weatherId.slice(0, -1)
+    if (weatherId.length == 0) {
+      filename = path.join("rawimage", "default.raw")
+      break
+    }
+  }
+  row.push(filename)
+  if (row.length >= 4) {
+    rows.push(row)
+    row = []
+  }
+})
+fs.writeFileSync(OUTPUT_FILE, JSON.stringify(rows))
