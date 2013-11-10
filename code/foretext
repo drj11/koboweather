@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+
+fs = require('fs')
+
+json = fs.readFileSync('forecast.json')
+forecast = JSON.parse(json)
+console.log("forecast for " + forecast.city.name)
+for(i=0; i<forecast.list.length; ++i) {
+  var moment = forecast.list[i]
+  var desc = moment.weather.map(function(x){ return x.description })
+
+  console.log(moment.dt_txt + " " + desc.join(', '))
+}

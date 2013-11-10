@@ -1,0 +1,15 @@
+{
+  "name": "koboweather",
+  "version": "0.0.0",
+  "description": "Weather for Kobo",
+  "main": "index.js",
+  "dependencies": {
+    "request": "~2.27.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "exit 0"
+  },
+  "author": "",
+  "license": "BSD"
+}
