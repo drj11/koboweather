@@ -4,3 +4,8 @@ for p in png/*.png; do
   raw=${base%.png}.raw
   pngtokobo565 < "$p" > "rawimage/$raw"
 done
+
+cd rawimage
+ln -f -s 1384096538_sun-symbol.raw 800.raw
+ln -f -s cloud-2.raw 8.raw
+ln -f -s umbrella-rain.raw 5.raw
