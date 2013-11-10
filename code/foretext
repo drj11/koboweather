@@ -7,7 +7,8 @@ forecast = JSON.parse(json)
 console.log("forecast for " + forecast.city.name)
 for(i=0; i<forecast.list.length; ++i) {
   var moment = forecast.list[i]
-  var desc = moment.weather.map(function(x){ return x.description })
+  var desc = moment.weather.map(function(x){
+    return x.id + " " + x.description })
 
   console.log(moment.dt_txt + " " + desc.join(', '))
 }
