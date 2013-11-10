@@ -1,0 +1,6 @@
+#!/bin/sh
+for p in png/*.png; do
+  base=$(basename "$p")
+  raw=${base%.png}.raw
+  pngtokobo565 < "$p" > "rawimage/$raw"
+done
