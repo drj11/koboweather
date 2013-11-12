@@ -9,28 +9,45 @@ OUTPUT_FILE = "assemble.json"
 fs = require('fs')
 path = require('path')
 
-json = fs.readFileSync('forecast.json')
-forecast = JSON.parse(json)
-rows = []
-row = []
-forecast.list.map(function(x) {
-  var weatherId = String(x.weather[0].id)
-  var filename
-  while (true) {
-    filename = path.join("rawimage", weatherId + '.raw')
-    if(fs.existsSync(filename)) {
-      break
+request = require('request')
+
+URL = 'http://api.openweathermap.org/data/2.5/forecast?id=2638077&cnt=1'
+
+readJSON = function() {
+  json = fs.readFileSync('forecast.json')
+  forecast = JSON.parse(json)
+  rows = []
+  row = []
+  forecast.list.map(function(x) {
+    var weatherId = String(x.weather[0].id)
+    var filename
+    while (true) {
+      filename = path.join("rawimage", weatherId + '.raw')
+      if(fs.existsSync(filename)) {
+        break
+      }
+      weatherId = weatherId.slice(0, -1)
+      if (weatherId.length == 0) {
+        filename = path.join("rawimage", "default.raw")
+        break
+      }
     }
-    weatherId = weatherId.slice(0, -1)
-    if (weatherId.length == 0) {
-      filename = path.join("rawimage", "default.raw")
-      break
+    row.push(filename)
+    if (row.length >= 4) {
+      rows.push(row)
+      row = []
     }
+  })
+  fs.writeFileSync(OUTPUT_FILE, JSON.stringify(rows))
+}
+
+request(URL, function(error, response, body) {
+  if(error) {
+    throw error
   }
-  row.push(filename)
-  if (row.length >= 4) {
-    rows.push(row)
-    row = []
+  if(response.statusCode != 200) {
+    throw response.statusCode
   }
+  fs.writeFileSync('forecast.json', body)
+  readJSON()
 })
-fs.writeFileSync(OUTPUT_FILE, JSON.stringify(rows))
