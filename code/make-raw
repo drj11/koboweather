@@ -2,7 +2,8 @@
 for p in png/*.png; do
   base=$(basename "$p")
   raw=${base%.png}.raw
-  pngtokobo565 < "$p" > "rawimage/$raw"
+  pngtopnm "$p" | pnmflip -rotate90 | pnmtopng |
+    pngtokobo565 > "rawimage/$raw"
 done
 
 cd rawimage
