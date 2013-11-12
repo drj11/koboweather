@@ -4,14 +4,15 @@
 
 fs = require('fs')
 
+OUTPUT_FILE = 'rawimage/display.raw'
 assJSON = fs.readFileSync('assemble.json')
 ass = JSON.parse(assJSON)
 
 main = function() {
   var rows = hcat(ass.map(vcat))
   rows = rows.map(make800)
-  console.log("rows: ", rows.length, " columns: ", rows[0].length)
-  fs.writeFileSync('assembled.raw', Buffer.concat(rows))
+  fs.writeFileSync(OUTPUT_FILE, Buffer.concat(rows))
+  console.warn("Wrote RAW file to", OUTPUT_FILE)
 }
 
 make800 = function(row) {
