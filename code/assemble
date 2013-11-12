@@ -1,0 +1,64 @@
+#!/usr/bin/env node
+
+// Assemble final raw picture under direction of assemble.json
+
+fs = require('fs')
+
+assJSON = fs.readFileSync('assemble.json')
+ass = JSON.parse(assJSON)
+
+main = function() {
+  var rows = hcat(ass.map(vcat))
+  rows = rows.map(make800)
+  console.log("rows: ", rows.length, " columns: ", rows[0].length)
+  fs.writeFileSync('assembled.raw', Buffer.concat(rows))
+}
+
+make800 = function(row) {
+  // 800 pixels == 1600 bytes.
+  return row.slice(0, 1600)
+}
+    
+
+// Horizontal Concatenate list of lists.
+hcat = function(l) {
+  rows = []
+  while(l[0].length > 0) {
+    var list = l.map(function(stack){return stack.shift()})
+    var row = Buffer.concat(list)
+    rows.push(row)
+  }
+  return rows
+}
+
+// Vertical Concatenate list of files.
+// A list of list of bytes is returned.
+// For now each file is assumed to be 300 bytes per row.
+// :todo: relax this 300 byte per row assumption.
+vcat = function(l) {
+  var lists = l.map(readRows)
+  var flat = flatten(lists)
+  return flat
+}
+
+
+// Flatten list of lists into a plain list.
+flatten = function(l) {
+  var flat = []
+  flat = flat.concat.apply(flat, l)
+  return flat
+}
+
+// Read a file into a list of rows.
+readRows = function(name) {
+  var buf = fs.readFileSync(name)
+  var bpr = 300
+  var res = []
+  while(buf.length > 0) {
+    res.push(buf.slice(0, bpr))
+    buf = buf.slice(bpr)
+  }
+  return res
+}
+
+main()
