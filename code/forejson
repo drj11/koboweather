@@ -41,13 +41,23 @@ readJSON = function() {
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(rows))
 }
 
-request(URL, function(error, response, body) {
-  if(error) {
-    throw error
-  }
-  if(response.statusCode != 200) {
-    throw response.statusCode
-  }
-  fs.writeFileSync('forecast.json', body)
+requestJSON = function(cb) {
+  request(URL, function(error, response, body) {
+    if(error) {
+      throw error
+    }
+    if(response.statusCode != 200) {
+      throw response.statusCode
+    }
+    fs.writeFileSync('forecast.json', body)
+    cb()
+  })
+}
+
+arg = process.argv.slice(2)
+
+if(arg.length > 0 && arg[0] == '--offline') {
   readJSON()
-})
+} else {
+  requestJSON(readJSON)
+}

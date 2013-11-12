@@ -1,2 +1,0 @@
-#!/bin/sh
-wget -O forecast.json 'http://api.openweathermap.org/data/2.5/forecast?id=2638077&cnt=1'
