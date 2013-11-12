@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-# Convert forecast in input file 'forecast.json' to
-# output file 'assemble.json'. The output is essentially a
-# sequence of raw pictures to be assembled.
+// Convert forecast in input file 'forecast.json' to
+// output file 'assemble.json'. The output is essentially a
+// sequence of raw pictures to be assembled.
 
 OUTPUT_FILE = "assemble.json"
 
