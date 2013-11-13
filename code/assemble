@@ -10,6 +10,7 @@ assJSON = fs.readFileSync('assemble.json')
 ass = JSON.parse(assJSON)
 
 main = function() {
+  ass.map(function(row){row.reverse()})
   var rows = hcat(ass.map(vcat))
   rows = rows.map(make800)
   fs.writeFileSync(OUTPUT_FILE, Buffer.concat(rows))
