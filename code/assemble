@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 // Assemble final raw picture under direction of assemble.json
+// Run code/forejson to download a forecast and create assemble.json
 
 fs = require('fs')
 
