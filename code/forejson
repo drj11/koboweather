@@ -19,7 +19,7 @@ readJSON = function() {
   rows = []
   row = []
   time = []
-  forecast.list.map(function(x) {
+  forecast.list.slice(0, 8).map(function(x) {
     var weatherId = String(x.weather[0].id)
     var hour = x.dt_txt.split(' ')[1].slice(0,5)
     hour = hour.replace(':', '')
@@ -44,6 +44,8 @@ readJSON = function() {
       time = []
     }
   })
+  var location = forecast.city.name
+  rows.push([[path.join("rawimage", location + '.raw'), 220]])
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(rows))
 }
 
