@@ -1,26 +1,42 @@
 #!/bin/sh
-# Make a series of raw images for the hourly times:
+# Make a series of raw images from SVG rendered strings:
+# for the hourly times:
 T="0000 0300 0600 0900 1200 1500 1800 2100"
-# Each image is Wx150 pixels.
+# Each image is 150xH pixels.
+# for the locations:
+L="Sheffield"
+# Each image is 600x110 pixels, 110x600 when rotated onto the screen.
 
-mkdir -p work
-
-for t in $T; do
-  cat > work/"$t".svg <<EOF
+svg() {
+  TEXT=$1
+  WIDTH=$2
+  HEIGHT=$3
+  BASE=$(( ($HEIGHT * 8 + 5)/10 ))
+  FONTSIZE=$4
+  cat > work/"$TEXT".svg <<EOF
 <svg
    xmlns:svg="http://www.w3.org/2000/svg"
    version="1.1"
-   width="150"
-   height="25"
+   width="$WIDTH"
+   height="$HEIGHT"
   >
     <text
       x="0"
       y="0"
-      transform="translate(75,18)"
-      style="text-anchor:middle;text-align:center;font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-  >$t</text>
+      transform="translate($(($WIDTH / 2)),$BASE)"
+      style="text-anchor:middle;text-align:center;font-size:${FONTSIZE}px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+  >$TEXT</text>
 </svg>
 EOF
+}
+
+mkdir -p work
+
+for t in $T; do
+  svg "$t" 150 25 20
+done
+for t in $L; do
+  svg "$t" 600 110 72
 done
 
 for f in work/*.svg; do
