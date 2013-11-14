@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Convert SVG icon files in source/* to SVG files
+# in work/* that are 150px by 150px.
+# These are now ready for conversion to PNG.
+
+mkdir -p work
+for f in source/*.svg; do
+  base=$(basename "$f")
+  out=work/${base%.svg}.svgtemp
+  inkscape --export-plain-svg="$out" "$f" &&
+  svg=${out%.svgtemp}.svg &&
+  sed '/^ *width=/s/.*/width="150"/;/^ *height=/s/.*/height="150"/' "$out" > "$svg" &&
+  echo 1>&2 "Wrote $svg"
+done
