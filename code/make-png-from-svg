@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Convert SVG files to PNG.
+
+for f in work/*.svg; do
+  png=${f%.svg}.png
+  inkscape --export-background=white --export-png="$png" "$f"
+done
