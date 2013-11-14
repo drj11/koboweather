@@ -1,0 +1,30 @@
+#!/bin/sh
+# Make raw images for the location strings:
+L="Sheffield"
+# Each image is 600x110 pixels, 110x600 when rotated onto the
+# screen.
+
+mkdir -p work
+
+for l in $L; do
+  cat > work/"$l".svg <<EOF
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   version="1.1"
+   width="600"
+   height="110"
+  >
+    <text
+      x="0"
+      y="0"
+      transform="translate(300,90)"
+      style="text-anchor:middle;text-align:center;font-size:72px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+  >$l</text>
+</svg>
+EOF
+done
+
+for f in work/*.svg; do
+  png=${f%.svg}.png
+  inkscape --export-background=white --export-png="$png" "$f"
+done
