@@ -67,7 +67,6 @@ readRows = function(name) {
   }
   buf = fs.readFileSync(name)
 
-  console.warn("readRows", name, bpr)
   var res = []
   while(buf.length > 0) {
     res.push(buf.slice(0, bpr))
