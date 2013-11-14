@@ -1,5 +1,5 @@
 #!/bin/sh
-for p in png/*.png; do
+for p in work/*.png; do
   base=$(basename "$p")
   raw=${base%.png}.raw
   pngtopnm "$p" | pnmflip -rotate90 | pnmtopng |

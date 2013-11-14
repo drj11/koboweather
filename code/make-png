@@ -1,7 +1,7 @@
 #!/bin/sh
-mkdir -p png
+mkdir -p work
 for f in source/*.svg; do
   base=$(basename "$f")
-  png=png/${base%.svg}.png
+  png=work/${base%.svg}.png
   inkscape --export-background=white --export-width 150 --export-height 150 --export-png="$png" "$f"
 done
