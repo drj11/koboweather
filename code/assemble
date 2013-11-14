@@ -55,7 +55,7 @@ flatten = function(l) {
 // Read a file into a list of rows.
 readRows = function(name) {
   var buf = fs.readFileSync(name)
-  var bpr = 300
+  var bpr = fs.statSync(name).size/150
   var res = []
   while(buf.length > 0) {
     res.push(buf.slice(0, bpr))
