@@ -39,8 +39,9 @@ hcat = function(l) {
 
 // Vertical Concatenate list of files.
 // A list of list of bytes is returned.
-// For now each file is assumed to be 300 bytes per row.
-// :todo: relax this 300 byte per row assumption.
+// Each element of the list is either a name (string), or a pair
+// ['name', bytesPerRow]. When the element is just a name, the
+// bytesPerRow is assumed to be 300 (150 pixels).
 vcat = function(l) {
   var lists = l.map(readRows)
   var flat = flatten(lists)
