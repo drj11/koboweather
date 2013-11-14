@@ -1,0 +1,29 @@
+#!/bin/sh
+# Make a series of raw images for the hourly times:
+T="0000 0300 0600 0900 1200 1500 1800 2100"
+# Each image is Wx150 pixels.
+
+mkdir -p work
+
+for t in $T; do
+  cat > work/"$t".svg <<EOF
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   version="1.1"
+   width="150"
+   height="25"
+  >
+    <text
+      x="0"
+      y="0"
+      transform="translate(50,18)"
+      style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+  >$t</text>
+</svg>
+EOF
+done
+
+for f in work/*.svg; do
+  png=${f%.svg}.png
+  inkscape --export-background=white --export-png="$png" "$f"
+done
