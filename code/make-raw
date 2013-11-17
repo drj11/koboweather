@@ -7,6 +7,11 @@ for p in work/*.png; do
 done
 
 cd rawimage
-ln -f -s 1384096538_sun-symbol.raw 800.raw
-ln -f -s cloud-2.raw 8.raw
-ln -f -s umbrella-rain.raw 5.raw
+# We copy rather than link because the Kobo filesystem can't
+# handle symlinks.
+set -- 1384096538_sun-symbol.raw 800.raw cloud-2.raw 8.raw umbrella-rain.raw 5.raw
+while [ $# != 0 ]; do
+  rm -f "$2"
+  cp "$1" "$2"
+  shift 2
+done
