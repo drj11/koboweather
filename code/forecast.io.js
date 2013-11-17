@@ -14,7 +14,6 @@ exports.read = function(cb) {
   var hourly = forecast.hourly.data.slice(0,24)
   hourly.map(function(x) {
       var date = new Date(x.time*1000)
-      console.log(date.toISOString(), x.icon)
   })
   var o = summarise3H(hourly)
   var i
@@ -27,7 +26,6 @@ exports.read = function(cb) {
       o[i].icon = 'rawimage/default.raw'
     }
   }
-  console.log(o)
   cb(o, {})
 }
 
