@@ -23,3 +23,5 @@ Shows: Weather forecast, Programmed Location, Date, headline
 from BBC and github (house issue tracker!), the next busses in
 both directions, calendar entries for today and a summary of
 tomorrow.
+
+Also: binduino-lite functionality.
