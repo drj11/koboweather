@@ -9,7 +9,14 @@ done
 cd rawimage
 # We copy rather than link because the Kobo filesystem can't
 # handle symlinks.
-set -- 1384096538_sun-symbol.raw 800.raw cloud-2.raw 8.raw umbrella-rain.raw 5.raw
+set -- $(cat <<EOF
+1384096538_sun-symbol.raw 800.raw
+cloud-2.raw 8.raw
+cloud-2.raw cloudy.raw
+umbrella-rain.raw 5.raw
+umbrella-rain.raw rain.raw
+EOF
+)
 while [ $# != 0 ]; do
   rm -f "$2"
   cp "$1" "$2"
