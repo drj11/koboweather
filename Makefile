@@ -1,6 +1,6 @@
 
 tar:
-	cd ..; tar cf koboweather/koboweather.tar koboweather/package.json koboweather/code koboweather/settings.json koboweather/rawimage
+	cd ..; tar cf koboweather/koboweather.tar koboweather/Makefile koboweather/package.json koboweather/code koboweather/settings.json koboweather/rawimage
 
 display: rawimage/display.raw
 
