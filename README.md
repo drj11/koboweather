@@ -25,3 +25,6 @@ both directions, calendar entries for today and a summary of
 tomorrow.
 
 Also: binduino-lite functionality.
+
+Not display temperature in degrees means that we don't have to
+configure for degrees C/F.
