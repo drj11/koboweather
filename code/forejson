@@ -154,11 +154,32 @@ requestJSON = function(cb) {
   })
 }
 
-readJSON = READ['forecast.io']
-
 arg = process.argv.slice(2)
 
-if(arg.length > 0 && arg[0] == '--offline') {
+var offline = false
+var provider = 'forecast.io'
+
+while(arg.length > 0) {
+  if(arg[0] == '--offline') {
+    offline = true
+    arg.shift()
+  } else if(arg[0] == '--provider') {
+    provider = arg[1]
+    arg = arg.slice(2)
+  } else if(arg[0] == '--') {
+    arg.shift()
+    break
+  } else if(arg[0].match(/^-/)) {
+    usage()
+    sys.exit()
+  } else {
+    break
+  }
+}
+
+readJSON = READ[provider]
+
+if(offline) {
   readJSON(makeAssemble)
 } else {
   requestJSON(function() {
