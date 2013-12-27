@@ -11,6 +11,8 @@ cd rawimage
 # handle symlinks.
 set -- $(cat <<EOF
 1384096538_sun-symbol.raw 800.raw
+1384096538_sun-symbol.raw clear.raw
+1384831400_sun-cloud.raw 801.raw
 cloud-2.raw 8.raw
 cloud-2.raw cloudy.raw
 umbrella-rain.raw 5.raw
