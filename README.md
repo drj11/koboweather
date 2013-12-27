@@ -1,3 +1,8 @@
+```
+make stuff
+make tar
+```
+
 Example layout:
 
  OO  OO  OO  OO 
