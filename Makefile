@@ -4,7 +4,7 @@ tar:
 
 display: rawimage/display.raw
 
-rawimage/display.raw:
+rawimage/display.raw: assemble.json
 	code/forejson
 	code/assemble
 
