@@ -1,4 +1,5 @@
 #!/bin/sh
+mkdir -p rawimage
 for p in work/*.png; do
   base=$(basename "$p")
   raw=${base%.png}.raw
